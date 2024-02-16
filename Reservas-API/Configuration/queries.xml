@@ -1,0 +1,88 @@
+﻿<data>
+  <query name="get-room-by-id">
+    <sql>    
+      SELECT
+        r.id AS "Id",
+        r.number AS "NumberRoom",
+        r.base_cost AS "BaseCost",
+        r.taxes AS "Taxes",
+        r.type AS "Type",
+        r.location AS "Location",
+        r.status AS "Status",
+        h.name AS "HotelName",
+        h.address AS "HotelAddress",
+        h.city AS "HotelCity"
+      FROM rooms r
+      INNER JOIN hotels h ON
+       r.hotel_id = h.id
+      WHERE
+       R.id = @id
+    </sql>
+  </query>
+  
+  <query name="get-reservations-by-user">
+    <sql>
+      SELECT
+      r.id As "Id",     
+      r.check_in_date As "CheckInDate" ,
+      r.check_out_date As "CheckOutDate" ,
+      r.total_cost As "TotalCost",
+      h."name" As "HotelName",
+      h.address As "HotelAddress",
+      r2."number" As "NumberRoom",
+      r2."location" As "LocationRoom",
+      g.id As "GuestId",
+      g.first_name As "FirstName",
+      g.last_name As "LastName" ,
+      g.email As "Email"
+      FROM
+      reservations r
+      INNER JOIN rooms r2 ON
+      r.room_id = r2.id
+      INNER JOIN hotels h ON
+      r2.hotel_id = h.id
+      INNER JOIN guests g ON
+      g.reservation_id = r.id
+      WHERE
+      r.user_id = @id
+    </sql>
+    </query>
+
+  <query name="get-detail-reservation-by-id">
+    <sql>
+      SELECT
+      r.id AS "ReservationId",
+      r.check_in_date AS "CheckInDate",
+      r.check_out_date AS "CheckOutDate",
+      r.total_cost AS "TotalCost",
+      h.id AS "HotelId",
+      h."name" AS "HotelName",
+      r2.id AS "RoomId",
+      r2."number" AS "NumberRoom",
+      r2."type" AS "TypeRoom",
+      r2."location" AS "LocationRoom",
+      r2.base_cost AS "BaseCost",
+      r2.taxes AS "Taxes",
+      g.id AS "Id",
+      g.first_name AS "FirstName",
+      g.last_name AS "LastName",
+      g.contact_phone AS "ContactPhone",
+      g.document_number AS "DocumentNumber",
+      g.email AS "Email",
+      e.id AS "EmergencyId",
+      e.full_name AS "EmergencyContact",
+      e.contact_phone AS "EmergencyPhone"
+      FROM
+      reservations r
+      INNER JOIN guests g ON
+      g.reservation_id = r.id
+      INNER JOIN rooms r2 ON
+      r.room_id = r2.id
+      INNER JOIN hotels h ON
+      h.id = r2.hotel_id
+      INNER JOIN emergencycontacts e ON
+      e.reservation_id = r.id
+      WHERE r.id = @id
+    </sql>
+  </query>
+</data>
