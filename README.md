@@ -41,5 +41,5 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
 
 4. **Acceder a la Aplicación**
 
-   Una vez que los contenedores estén en ejecución, tu aplicación debería estar accesible en `[http://localhost:7197](https://localhost:7197/swagger/index.html)` o el puerto que hayas especificado en `docker-compose.yml`.
+   Una vez que los contenedores estén en ejecución, tu aplicación debería estar accesible en [http://localhost:7197](https://localhost:7197/swagger/index.html) o el puerto que hayas especificado en `docker-compose.yml`.
 
