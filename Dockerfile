@@ -1,24 +1,49 @@
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0.302 AS build
-WORKDIR /source
+ARG VERSION=7.0.302
 
+# Etapa de compilaci贸n
+FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build-env
 
-
-# Asumiendo que tu soluci髇 puede contener varios proyectos, ajusta los siguientes pasos seg鷑 tu estructura exacta.
-# Primero, copia solo los archivos de soluci髇 y proyecto para restaurar las dependencias.
-COPY *.sln .
-COPY Reservas-API/*.csproj Reservas-API/
-COPY Reservas-DOMAIN/*.csproj Reservas-DOMAIN/
-COPY Reservas-INFRASTRUCTURE/*.csproj Reservas-INFRASTRUCTURE/
-RUN dotnet restore
-
-# Ahora, copia el resto de los archivos de tu soluci髇 y publica el proyecto espec韋ico.
-COPY . .
-# Aseg鷕ate de especificar el proyecto espec韋ico que quieres publicar.
-RUN dotnet publish Reservas-API/Reservas-API.csproj -c Release -o /app --no-restore
-
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build /app ./
+
+# Agrega el c贸digo fuente al contenedor
+ADD . .
+
+# Restaura las dependencias y herramientas de los proyectos
+RUN dotnet restore *.sln
+
+# Publica la aplicaci贸n
+RUN dotnet publish -c Release -o ./out --no-restore
+
+#-----------------
+# Etapa de ejecuci贸n
+FROM mcr.microsoft.com/dotnet/aspnet:$VERSION AS runtime
+
+ENV APP_HOME=/app
+WORKDIR $APP_HOME
+
+# Crea un usuario para la aplicaci贸n
+RUN adduser --disabled-password --gecos "" app -u 1000
+
+# Configura el puerto y la desactivaci贸n de diagn贸sticos
+ENV ASPNETCORE_URLS=http://*:5000
+ENV COMPlus_EnableDiagnostics=0
+
+# Establece el entorno (Development, Staging, Production)
+ARG ENV
+ENV ASPNETCORE_ENVIRONMENT ${ENV:-Development}
+
+# Copia los archivos publicados desde la etapa de compilaci贸n
+COPY --from=build-env --chown=app:app /app/out $APP_HOME
+
+# Aseg煤rate de copiar el directorio Configuration y su contenido, ajusta la ruta seg煤n sea necesario
+COPY --from=build-env --chown=app:app /app/Configuration $APP_HOME/Configuration
+
+# Expone el puerto en el que la aplicaci贸n escucha
+EXPOSE 5000
+
+# Cambia al usuario de la aplicaci贸n
+USER 1000
+
+# Inicia la aplicaci贸n
 ENTRYPOINT ["dotnet", "Reservas-API.dll"]
