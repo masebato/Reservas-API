@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      args:        
+      args:      
         ENV: Development # O puedes cambiarlo a Production/Staging según sea necesario
     ports:
       - "5000:5000" # Asegúrate de que el puerto de exposición coincida con ASPNETCORE_URLS
