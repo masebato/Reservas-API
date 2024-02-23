@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservas-API", "Reservas-API\Reservas-API.csproj", "{268EEFB5-8907-4CF3-BB21-120C80C5BDCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservas-API", "Reservas-API\Reservas-API.csproj", "{268EEFB5-8907-4CF3-BB21-120C80C5BDCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservas-DOMAIN", "Reservas-DOMAIN\Reservas-DOMAIN.csproj", "{BBD781CA-8E29-44DF-BBD1-B8CC36D7BFA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservas-DOMAIN", "Reservas-DOMAIN\Reservas-DOMAIN.csproj", "{BBD781CA-8E29-44DF-BBD1-B8CC36D7BFA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservas-INFRASTRUCTURE", "Reservas-INFRASTRUCTURE\Reservas-INFRASTRUCTURE.csproj", "{06D7D1BA-D69A-4B1F-A06C-05209A500CD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservas-INFRASTRUCTURE", "Reservas-INFRASTRUCTURE\Reservas-INFRASTRUCTURE.csproj", "{06D7D1BA-D69A-4B1F-A06C-05209A500CD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{816610EA-6370-4ACE-9ED7-56867A442489}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

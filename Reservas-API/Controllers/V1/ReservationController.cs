@@ -113,5 +113,38 @@ namespace Reservas_API.Controllers.V1
             }
         }
 
+
+        [Route("FindRoom")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<IActionResult> FindRoom(int reservationId)
+        {
+
+            try
+            {
+                ReservationDetailQuery reservationByUser = new ReservationDetailQuery(reservationId);
+                var result = await _mediator.Send(reservationByUser);
+                return await SuccessResquest(result);
+            }
+            catch (EntityNotFoundException r)
+            {
+                return await UnSuccessRequestNotFound(r.Message);
+            }
+            catch (ReservasException r)
+            {
+                return await UnSuccessRequest(r.Message);
+            }
+            catch (BadRequestException b)
+            {
+                return await UnSuccessRequest(b.Message);
+            }
+            catch (Exception e)
+            {
+                return await UnexpectedErrorResquest(e.Message);
+            }
+        }
+
     }
 }

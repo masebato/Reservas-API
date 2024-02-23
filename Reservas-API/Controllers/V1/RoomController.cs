@@ -52,11 +52,13 @@ namespace Reservas_API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<IActionResult> UpdateStatusRoom(UpdateStatusRoomCommand updateStatusRoom)
+        public async Task<IActionResult> UpdateStatusRoom(int idRoom)
         {
 
             try
             {
+                UpdateStatusRoomCommand updateStatusRoom = new UpdateStatusRoomCommand(idRoom);
+
                 var result = await _mediator.Send(updateStatusRoom);
                 return await SuccessResquest(result);
             }
