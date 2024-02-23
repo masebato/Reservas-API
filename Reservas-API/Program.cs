@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Reservas_INFRASTRUCTURE;
 using Reservas_API.Infrastructure.AutoFactModules;
 using Reservas_API.Infrastructure.Exceptions;
+using Reservas_API.SeedWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,9 +68,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory() + "/Configuration")
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddJsonFile(ConfigMapFileProvider.FromRelativePath("/Configuration"),
+        $"appsettings.{app.Environment.EnvironmentName}.json", optional: false, reloadOnChange: false);
 
 var appName = builder.Configuration.GetSection("AppName").Value;
 Console.WriteLine(FiggleFonts.Standard.Render(appName));
