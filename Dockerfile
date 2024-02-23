@@ -1,5 +1,5 @@
 
-ARG VERSION=7.0
+ARG VERSION=6.0
 
 # Etapa de compilación
 FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build-env
