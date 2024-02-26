@@ -73,7 +73,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseRouting(); // Asegúrate de llamar a UseRouting antes de UseCors y UseAuthorization
+
+app.UseCors("AllowOrigin");
 
 app.UseAuthorization();
 

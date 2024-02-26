@@ -1,4 +1,4 @@
-﻿{
+{
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Treebu.Ledger.Api": {
+    "Reservas-API": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
