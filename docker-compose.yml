@@ -4,27 +4,28 @@ services:
     build:
       context: .
       args:      
-        ENV: Development # O puedes cambiarlo a Production/Staging según sea necesario
+        ENV: Development
     ports:
-      - "5000:5131" # Asegúrate de que el puerto de exposición coincida con ASPNETCORE_URLS
+      - "5000:5131"
     depends_on:
       - db
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development # O Production/Staging según sea necesario
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__postgrestDB=Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres;Timeout=30
     volumes:
-      - ./Configuration:/app/Configuration # Solo si necesitas editar los archivos de configuración sin reconstruir el contenedor
+      - ./Configuration:/app/Configuration
 
   db:
-    image: postgres:latest # Especifica una versión para evitar problemas de compatibilidad inesperados
+    image: postgres:latest
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432" # Opcional: Exponer el puerto solo si necesitas acceder a la DB desde fuera de Docker
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./postgres-init/:/docker-entrypoint-initdb.d/
 
 volumes:
   postgres-data:
