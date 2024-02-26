@@ -59,6 +59,11 @@ builder.Services.AddDbContext<ReservasDbContext>(
         .EnableDetailedErrors());
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+builder.Configuration.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"))
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,10 +77,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory() + "/Configuration")
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-    .AddJsonFile(ConfigMapFileProvider.FromRelativePath("/Configuration"),
-        $"appsettings.{app.Environment.EnvironmentName}.json", optional: false, reloadOnChange: false);
 
 var appName = builder.Configuration.GetSection("AppName").Value;
 Console.WriteLine(FiggleFonts.Standard.Render(appName));

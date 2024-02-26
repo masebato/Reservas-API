@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Configuration\appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Configuration\appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Figgle" Version="0.5.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
@@ -20,12 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Reservas-DOMAIN\Reservas-DOMAIN.csproj" />
     <ProjectReference Include="..\Reservas-INFRASTRUCTURE\Reservas-INFRASTRUCTURE.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Configuration\appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

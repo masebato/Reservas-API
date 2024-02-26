@@ -30,7 +30,9 @@ ENV COMPlus_EnableDiagnostics=0
 ARG ENV
 ENV ASPNETCORE_ENVIRONMENT ${ENV:-Development}
 COPY --from=build-env --chown=app:app /app/out $APP_HOME
+# Copiar los archivos de configuración al directorio de trabajo del contenedor
 COPY --from=build-env --chown=app:app /app/Reservas-API/Configuration $APP_HOME/Configuration
+
 EXPOSE 5131 5131
 
 USER 1000
