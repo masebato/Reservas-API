@@ -49,6 +49,38 @@ namespace Reservas_API.Controllers.V1
             }
         }
 
+        [Route("GetRoomByDate")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<IActionResult> GetRoomByDate(DateTime initialDate, DateTime finalDate)
+        {
+
+            try
+            {
+                RoomByDateQuery roomByDateQuery = new RoomByDateQuery(initialDate,finalDate);
+                var result = await _mediator.Send(roomByDateQuery);
+                return await SuccessResquest(result);
+            }
+            catch (EntityNotFoundException r)
+            {
+                return await UnSuccessRequestNotFound(r.Message);
+            }
+            catch (ReservasException r)
+            {
+                return await UnSuccessRequest(r.Message);
+            }
+            catch (BadRequestException b)
+            {
+                return await UnSuccessRequest(b.Message);
+            }
+            catch (Exception e)
+            {
+                return await UnexpectedErrorResquest(e.Message);
+            }
+        }
+
 
         [Route("UpdateStatusRoom")]
         [HttpPatch]

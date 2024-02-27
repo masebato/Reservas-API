@@ -25,7 +25,7 @@ namespace Reservas_API.Application.Commands.ReservationCommands
 
             var room = await _roomFinder.GetRoomById(request.RoomId);
 
-            if (room.Status)
+            if (!room.Status)
                 throw new ReservasException("Room is not available");
 
             var totalCost = (room.BaseCost + room.Taxes) * (request.CheckOutDate - request.CheckInDate).Days;

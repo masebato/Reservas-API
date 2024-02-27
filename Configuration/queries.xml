@@ -19,6 +19,40 @@
        R.id = @id
     </sql>
   </query>
+
+  <query name="get-room-by-date">
+    <sql>
+      SELECT
+      r.id AS "Id",
+      r.number AS "NumberRoom",
+      r.base_cost AS "BaseCost",
+      r.taxes AS "Taxes",
+      r.type AS "Type",
+      r.status AS "Status",
+      r.location AS "Location",
+      h.name AS "HotelName",
+      h.address AS "HotelAddress",
+      h.city AS "HotelCity"
+      FROM
+      Rooms r
+      JOIN Hotels h ON r.hotel_id = h.id
+      WHERE
+      r.status = TRUE
+      AND h.status = TRUE
+      AND NOT EXISTS (
+      SELECT 1
+      FROM Reservations res
+      WHERE res.room_id = r.id
+      AND (
+      (res.check_in_date &lt;= @finalDate AND res.check_out_date &gt;= @initialDate)
+        OR (res.check_in_date BETWEEN @initialDate AND @finalDate)
+        OR (res.check_out_date BETWEEN @initialDate AND @finalDate)
+        )
+        AND res.status NOT IN ('CANCELADA')
+        )
+        ORDER BY r.id;
+      </sql>
+  </query>
   
   <query name="get-reservations-by-user">
     <sql>

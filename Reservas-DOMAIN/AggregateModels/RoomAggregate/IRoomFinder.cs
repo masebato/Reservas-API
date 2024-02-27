@@ -10,5 +10,7 @@ namespace Reservas_DOMAIN.AggregateModels.RoomAggregate
     public interface IRoomFinder
     {
         Task<FindRoomDTO> GetRoomById(int roomId);
+
+        Task<IList<FindRoomDTO>> GetRoomByDate(DateTime initialDate, DateTime finalDate);
     }
 }
