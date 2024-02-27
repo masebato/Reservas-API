@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Reservas_API.Application.Commands.RoomCommands;
+using Reservas_API.Application.Queries.Reservation;
+using Reservas_API.Application.Queries.Room;
 using Reservas_DOMAIN.Exception;
 
 namespace Reservas_API.Controllers.V1
@@ -25,7 +27,8 @@ namespace Reservas_API.Controllers.V1
 
             try
             {
-                var result = await _mediator.Send(roomId);
+                RoomByIdQuery roomByIdQuery = new RoomByIdQuery(roomId);
+                var result = await _mediator.Send(roomByIdQuery);
                 return await SuccessResquest(result);
             }
             catch (EntityNotFoundException r)

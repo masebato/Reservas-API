@@ -20,27 +20,28 @@ namespace Reservas_INFRASTRUCTURE.Finder.Room
 
         public async Task<FindRoomDTO> GetRoomById(int roomId)
         {
-            
-            var sql = SQLreader.GetQuery("get-room-by-id").Result;
-            var dictionary = new Dictionary<string, object>
+            try
+            {
+                var sql = SQLreader.GetQuery("get-room-by-id").Result;
+                var dictionary = new Dictionary<string, object>
         {
             { "@id", roomId },
         };
-            var parameters = new DynamicParameters(dictionary);
-          
-            try
-            {
+                var parameters = new DynamicParameters(dictionary);
+
                 var room = await _dbConnection.QueryFirstAsync<FindRoomDTO>(sql, parameters);
                 if (room == null) throw new BadRequestException("There are no Room available");
-                
-                
+
+
                 return room;
+
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                throw;
+                throw new BadRequestException("There are not Room found");
             }
+           
           
           
         }
